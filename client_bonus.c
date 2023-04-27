@@ -6,13 +6,13 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 23:12:49 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/26 17:31:56 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/27 20:41:13 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
 
-char	**input;
+char	**g_input;
 
 int	ft_atoi(const char *str)
 {
@@ -47,7 +47,7 @@ void	count_bytes(int pos, int *bytes)
 {
 	char	str;
 
-	str = input[2][pos];
+	str = g_input[2][pos];
 	str = str >> 4;
 	if ((str & 0b1111) == 0b1111)
 		*bytes = 4;
@@ -59,6 +59,15 @@ void	count_bytes(int pos, int *bytes)
 		*bytes = 1;
 }
 
+void	send_signal(int index, int bits)
+{
+	if ((g_input[2][index] >> bits) & 1)
+		kill(ft_atoi(g_input[1]), SIGUSR2);
+	else
+		kill(ft_atoi(g_input[1]), SIGUSR1);
+	return ;
+}
+
 void	signal_handler(int signal, siginfo_t *inf, void *context)
 {
 	static int	i;
@@ -67,7 +76,7 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 	static int	u_bits;
 
 	usleep(100);
-	if (!(input[2][i]))
+	if (!(g_input[2][i]))
 		exit(EXIT_SUCCESS);
 	if (bytes == 0)
 		count_bytes(i, &bytes);
@@ -81,10 +90,7 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 		u_bits = 0;
 		count_bytes(i, &bytes);
 	}
-	if ((input[2][i] >> bits) & 1)
-		kill(ft_atoi(input[1]), SIGUSR2);
-	else
-		kill(ft_atoi(input[1]), SIGUSR1);
+	send_signal(i, bits);
 	bits++;
 	u_bits++;
 }
@@ -95,7 +101,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 		exit(EXIT_FAILURE);
-	input = argv;
+	g_input = argv;
 	ac.sa_sigaction = signal_handler;
 	sigemptyset(&ac.sa_mask);
 	ac.sa_flags = SA_SIGINFO;
@@ -103,6 +109,8 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	kill(getpid(), SIGUSR1);
 	while (1)
+	{
 		pause();
+	}
 	return (0);
 }
