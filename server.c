@@ -6,18 +6,13 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:43:21 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/05 22:53:06 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/28 10:08:13 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
 unsigned char	g_character;
-
-void	ft_putchar_fd(char c, int fd)
-{
-	write(fd, &c, sizeof(char));
-}
 
 int	power(int base, int exponent)
 {
@@ -47,7 +42,7 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 {
 	static int		count;
 	static pid_t	pid;
-	
+
 	if (pid == 0)
 		pid = inf->si_pid;
 	if (inf->si_pid != pid)
@@ -72,7 +67,8 @@ int	main(void)
 {
 	struct sigaction	ac;
 
-	printf("%d\n", getpid());
+	ft_putnbr_fd(getpid(), STDOUT_FILENO);
+	ft_putchar_fd('\n', STDOUT_FILENO);
 	ac.sa_sigaction = signal_handler;
 	sigemptyset(&ac.sa_mask);
 	ac.sa_flags = SA_SIGINFO;

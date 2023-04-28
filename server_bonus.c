@@ -6,32 +6,13 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 23:13:48 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/27 20:30:56 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/28 10:15:01 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
 
 unsigned char	g_ucharacter[4];
-
-void	ft_bzero(void *b, size_t len)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < len)
-	{
-		*(char *)(b + i) = 0;
-		i++;
-	}
-	return ;
-}
-
-void	ft_putunicode_fd(unsigned char *c, int size, int fd)
-{
-	write(fd, g_ucharacter, size);
-	return ;
-}
 
 int	count_bytes(void)
 {
@@ -87,7 +68,7 @@ void	check_bits(int *bytes, int bool, int *u_bits, pid_t client)
 	{
 		i = 0;
 		(*u_bits) = 0;
-		ft_putunicode_fd(g_ucharacter, (*bytes), STDOUT_FILENO);
+		write(STDOUT_FILENO, g_ucharacter, (*bytes));
 		ft_bzero(g_ucharacter, sizeof(g_ucharacter));
 	}
 	set_bits(bool, &bits, i, client);
@@ -123,7 +104,8 @@ int	main(void)
 {
 	struct sigaction	ac;
 
-	printf("%d\n", getpid());
+	ft_putnbr_fd(getpid(), STDOUT_FILENO);
+	ft_putchar_fd('\n', STDOUT_FILENO);
 	ac.sa_sigaction = signal_handler;
 	sigemptyset(&ac.sa_mask);
 	ac.sa_flags = SA_SIGINFO;

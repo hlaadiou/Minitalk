@@ -6,42 +6,13 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 23:12:49 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/27 20:41:13 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/28 10:09:35 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
 
 char	**g_input;
-
-int	ft_atoi(const char *str)
-{
-	int		i;
-	int		result;
-	int		sign;
-
-	i = 0;
-	result = 0;
-	sign = 1;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-')
-	{
-		sign = -1;
-		i++;
-	}
-	else if (str[i] == '+')
-		i++;
-	while (str[i] != '\0')
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-			result = result * 10 + str[i] - '0';
-		else
-			break ;
-		i++;
-	}
-	return (sign * result);
-}
 
 void	count_bytes(int pos, int *bytes)
 {
@@ -75,7 +46,7 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 	static int	bits;
 	static int	u_bits;
 
-	usleep(100);
+	usleep(300);
 	if (!(g_input[2][i]))
 		exit(EXIT_SUCCESS);
 	if (bytes == 0)

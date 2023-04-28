@@ -1,43 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft_utils.c                                      :+:      :+:    :+:   */
+/*   libft_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/28 10:07:35 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/28 10:08:33 by hlaadiou         ###   ########.fr       */
+/*   Created: 2023/04/28 08:31:28 by hlaadiou          #+#    #+#             */
+/*   Updated: 2023/04/28 10:13:15 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
-void	ft_putchar_fd(char c, int fd)
+void	ft_bzero(void *b, size_t len)
 {
-	write(fd, &c, sizeof(unsigned char));
-}
+	size_t	i;
 
-void	ft_putnbr_fd(int n, int fd)
-{
-	if (n == -2147483648)
+	i = 0;
+	while (i < len)
 	{
-		write(fd, "-2147483648", (11 * sizeof(char)));
-		return ;
+		*(char *)(b + i) = 0;
+		i++;
 	}
-	if (n < 0)
-	{
-		n *= -1;
-		ft_putchar_fd('-', fd);
-	}
-	if (n < 10)
-	{
-		ft_putchar_fd((n + '0'), fd);
-	}
-	else
-	{
-		ft_putnbr_fd((n / 10), fd);
-		ft_putnbr_fd((n % 10), fd);
-	}
+	return ;
 }
 
 int	ft_atoi(const char *str)
@@ -67,4 +52,32 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (sign * result);
+}
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, sizeof(unsigned char));
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	if (n == -2147483648)
+	{
+		write(fd, "-2147483648", (11 * sizeof(char)));
+		return ;
+	}
+	if (n < 0)
+	{
+		n *= -1;
+		ft_putchar_fd('-', fd);
+	}
+	if (n < 10)
+	{
+		ft_putchar_fd((n + '0'), fd);
+	}
+	else
+	{
+		ft_putnbr_fd((n / 10), fd);
+		ft_putnbr_fd((n % 10), fd);
+	}
 }
