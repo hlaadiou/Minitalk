@@ -6,7 +6,7 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 23:12:49 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/28 10:09:35 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:30:38 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ void	count_bytes(int pos, int *bytes)
 		*bytes = 1;
 }
 
-void	send_signal(int index, int bits)
+void	send_signal(int index, int bits, int signal)
 {
+	(void)signal;
 	if ((g_input[2][index] >> bits) & 1)
 		kill(ft_atoi(g_input[1]), SIGUSR2);
 	else
@@ -46,6 +47,8 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 	static int	bits;
 	static int	u_bits;
 
+	(void)inf;
+	(void)context;
 	usleep(300);
 	if (!(g_input[2][i]))
 		exit(EXIT_SUCCESS);
@@ -61,7 +64,7 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 		u_bits = 0;
 		count_bytes(i, &bytes);
 	}
-	send_signal(i, bits);
+	send_signal(i, bits, signal);
 	bits++;
 	u_bits++;
 }

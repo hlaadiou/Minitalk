@@ -6,7 +6,7 @@
 #    By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/17 16:43:26 by hlaadiou          #+#    #+#              #
-#    Updated: 2023/04/28 10:55:51 by hlaadiou         ###   ########.fr        #
+#    Updated: 2023/04/28 11:24:07 by hlaadiou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,12 @@ BONUS_NAME				= server_bonus
 BONUS_CLIENT_NAME		= client_bonus
 
 all:					$(NAME) $(CLIENT_NAME)
+
+%_bonus.o:				%_bonus.c minitalk_bonus.h
+						$(CC) $(CFLAGS) -c $< -o $@
+
+%.o:					%.c minitalk.h
+						$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME):				$(OBJS_SERVER)
 						$(CC) $(CFLAGS) -o $(NAME) $(OBJS_SERVER)

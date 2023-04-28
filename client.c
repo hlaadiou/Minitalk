@@ -6,7 +6,7 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:43:16 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/28 10:08:21 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:27:20 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 	static int	i;
 	static int	bits;
 
+	(void)context;
+	(void)inf;
+	(void)signal;
 	usleep(300);
 	if (!(g_input[2][i]))
 		exit(EXIT_SUCCESS);

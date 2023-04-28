@@ -6,7 +6,7 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 23:13:48 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/28 10:15:01 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:30:31 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 	static int		u_bits;
 	static pid_t	pid;
 
+	(void)context;
 	if (pid == 0)
 		pid = inf->si_pid;
 	if (inf->si_pid != pid)
