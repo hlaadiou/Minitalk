@@ -6,7 +6,7 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:43:24 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/28 11:31:01 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:33:05 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <signal.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <stdlib.h>
 
 int		ft_atoi(const char *str);
