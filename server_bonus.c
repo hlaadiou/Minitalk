@@ -6,7 +6,7 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 23:13:48 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/28 11:30:31 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/29 21:44:29 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 unsigned char	g_ucharacter[4];
 
-int	count_bytes(void)
+void	count_bytes(int *bytes)
 {
 	unsigned char	str;
 
 	str = g_ucharacter[0];
 	str = str >> 4;
 	if (g_ucharacter[0] == 0)
-		return (0);
+		(*bytes) = 0;
 	else if ((str & 0b1111) == 0b1111)
-		return (4);
+		(*bytes) = 4;
 	else if ((str & 0b1110) == 0b1110)
-		return (3);
+		(*bytes) = 3;
 	else if ((str & 0b1100) == 0b1100)
-		return (2);
+		(*bytes) = 2;
 	else
-		return (1);
+		(*bytes) = 1;
 }
 
 void	set_bits(int bool, int *bits, int index, pid_t client)
@@ -58,7 +58,7 @@ void	check_bits(int *bytes, int bool, int *u_bits, pid_t client)
 		(*bytes) = 0;
 	}
 	if ((*u_bits) == 8)
-		(*bytes) = count_bytes();
+		count_bytes(bytes);
 	if (bits == 8)
 	{
 		bits = 0;
@@ -69,7 +69,7 @@ void	check_bits(int *bytes, int bool, int *u_bits, pid_t client)
 		i = 0;
 		(*u_bits) = 0;
 		write(STDOUT_FILENO, g_ucharacter, (*bytes));
-		ft_bzero(g_ucharacter, sizeof(g_ucharacter));
+		ft_bzero(g_ucharacter, sizeof(g_ucharacter), 0);
 	}
 	set_bits(bool, &bits, i, client);
 }
@@ -85,7 +85,7 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 		pid = inf->si_pid;
 	if (inf->si_pid != pid)
 	{
-		ft_bzero(g_ucharacter, sizeof(g_ucharacter));
+		ft_bzero(g_ucharacter, sizeof(g_ucharacter), 1);
 		pid = inf->si_pid;
 		bytes = -1;
 	}
@@ -99,6 +99,8 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 		check_bits(&bytes, 1, &u_bits, pid);
 		u_bits++;
 	}
+	if (u_bits == 8 && g_ucharacter[0] == '\0')
+		ft_putstr_fd("\nDONE!", STDOUT_FILENO);
 }
 
 int	main(void)

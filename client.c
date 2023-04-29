@@ -6,7 +6,7 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:43:16 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/28 13:52:06 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/29 11:51:09 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv)
 {
 	struct sigaction	ac;
 
-	if (argc != 3 || ft_atoi(argv[1]) == -1 | ft_atoi(argv[1]) == 0)
+	if (argc != 3 || (ft_atoi(argv[1]) == -1) | (ft_atoi(argv[1]) == 0))
 		exit(EXIT_FAILURE);
 	g_input = argv;
 	ac.sa_sigaction = signal_handler;

@@ -6,7 +6,7 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 23:12:49 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/28 13:54:03 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/29 19:10:49 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ void	count_bytes(int pos, int *bytes)
 		*bytes = 1;
 }
 
-void	send_signal(int index, int bits, int signal)
+void	send_signal(int index, int *bits, int signal)
 {
 	(void)signal;
-	if ((g_input[2][index] >> bits) & 1)
+	if ((g_input[2][index] >> (*bits)) & 1)
 		kill(ft_atoi(g_input[1]), SIGUSR2);
 	else
 		kill(ft_atoi(g_input[1]), SIGUSR1);
+	(*bits)++;
 	return ;
 }
 
@@ -50,30 +51,31 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 	(void)inf;
 	(void)context;
 	usleep(300);
-	if (!(g_input[2][i]))
-		exit(EXIT_SUCCESS);
 	if (bytes == 0)
 		count_bytes(i, &bytes);
 	if (bits == 8)
 	{
 		bits = 0;
-		i++;
+		if (g_input[2][i])
+			i++;
 	}
 	if (u_bits == (bytes * 8))
 	{
 		u_bits = 0;
 		count_bytes(i, &bytes);
 	}
-	send_signal(i, bits, signal);
-	bits++;
+	send_signal(i, &bits, signal);
+	//bits++;
 	u_bits++;
+	if (!(g_input[2][i]) && bits == 8)
+		exit(EXIT_SUCCESS);
 }
 
 int	main(int argc, char **argv)
 {
 	struct sigaction	ac;
 
-	if (argc != 3 || ft_atoi(argv[1]) == -1 | ft_atoi(argv[1]) == 0)
+	if (argc != 3 || (ft_atoi(argv[1]) == -1) | (ft_atoi(argv[1]) == 0))
 		exit(EXIT_FAILURE);
 	g_input = argv;
 	ac.sa_sigaction = signal_handler;
@@ -83,8 +85,6 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	kill(getpid(), SIGUSR1);
 	while (1)
-	{
 		pause();
-	}
 	return (0);
 }

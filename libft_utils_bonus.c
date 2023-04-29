@@ -6,13 +6,13 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 08:31:28 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/28 11:30:44 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/29 21:37:36 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
 
-void	ft_bzero(void *b, size_t len)
+void	ft_bzero(void *b, size_t len, int toggle)
 {
 	size_t	i;
 
@@ -22,6 +22,8 @@ void	ft_bzero(void *b, size_t len)
 		*(char *)(b + i) = 0;
 		i++;
 	}
+	if (toggle == 1)
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return ;
 }
 
@@ -80,4 +82,17 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putnbr_fd((n / 10), fd);
 		ft_putnbr_fd((n % 10), fd);
 	}
+}
+
+void	ft_putstr_fd(char *str, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(fd, &str[i], sizeof(char));
+		i++;
+	}
+	return ;
 }
