@@ -6,7 +6,7 @@
 /*   By: hlaadiou <hlaadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 23:12:49 by hlaadiou          #+#    #+#             */
-/*   Updated: 2023/04/29 19:10:49 by hlaadiou         ###   ########.fr       */
+/*   Updated: 2023/04/30 12:14:39 by hlaadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	signal_handler(int signal, siginfo_t *inf, void *context)
 		count_bytes(i, &bytes);
 	}
 	send_signal(i, &bits, signal);
-	//bits++;
 	u_bits++;
 	if (!(g_input[2][i]) && bits == 8)
 		exit(EXIT_SUCCESS);
