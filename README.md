@@ -6,8 +6,8 @@ MiniTalk is a simple inter-process communication (IPC) system that allows proces
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/minitalk.git
-   cd minitalk
+   git clone https://github.com/hlaadiou/Minitalk
+   cd Minitalk
    ```
 
 2. Compile the code:
